@@ -1,28 +1,29 @@
 /**
- * Class to handle webcam
+ * Class to handle camera
  */
-export class Webcam {
+export class Camera {
   /**
-   * Open webcam and stream it through video tag.
+   * Open camera and stream it through video tag.
    * @param {HTMLVideoElement} videoRef video tag reference
    */
   open = (videoRef) => {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      const isMobile = 'maxTouchPoints' in navigator && navigator.maxTouchPoints > 0;
+      console.log(navigator.userAgent);
+      const videoConstraints = isMobile ? { facingMode: "user" } : { facingMode: "environment" };
       navigator.mediaDevices
         .getUserMedia({
           audio: false,
-          video: {
-            facingMode: "environment",
-          },
+          video: videoConstraints,
         })
         .then((stream) => {
           videoRef.srcObject = stream;
         });
-    } else alert("Can't open Webcam!");
+    } else alert("Can't open Camera!");
   };
 
   /**
-   * Close opened webcam.
+   * Close opened camera.
    * @param {HTMLVideoElement} videoRef video tag reference
    */
   close = (videoRef) => {
@@ -31,6 +32,6 @@ export class Webcam {
         track.stop();
       });
       videoRef.srcObject = null;
-    } else alert("Please open Webcam first!");
+    } else alert("Please open the camera first!");
   };
 }

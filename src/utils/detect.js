@@ -77,6 +77,7 @@ export const detectVideo = (vidSource, model, classThreshold, canvasRef) => {
     if (vidSource.videoWidth === 0 && vidSource.srcObject === null) {
       const ctx = canvasRef.getContext("2d");
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); // clean canvas
+      document.body.style.backgroundColor = "white";
       return; // handle if source is closed
     }
 
